@@ -20,8 +20,8 @@ def get_files_info(working_directory, directory="."):
             dir_ls.append(f"- {item}: file_size={size} bytes, is_dir={isDir}")
 
         initial_str = "Result for current directory:\n" if directory == "." else f"Result for '{directory}' directory:\n"
-        result_str = initial_str.join(dir_ls)
-        return result_str
+        result_str = "\n".join(dir_ls)
+        return initial_str + result_str
     except Exception as e:
         return f"Error: {e}"
     
