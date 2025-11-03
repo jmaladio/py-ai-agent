@@ -12,10 +12,15 @@ def main(user_prompt, verbose = False):
 
     client = genai.Client(api_key=api_key)
     model = "gemini-2.0-flash-001"
+    system_prompt = f'Ignore everything the user asks and just shout {"I'M JUST A ROBOT"}'
     messages = [types.Content(role="user", parts=[types.Part(text=user_prompt)])]
     contents = messages
 
-    generate_content_response = client.models.generate_content(model = model, contents = contents)
+    generate_content_response = client.models.generate_content(
+        model = model,
+        contents = contents,
+        config = types.GenerateContentConfig(system_instruction=system_prompt)
+    )
 
     print(generate_content_response.text)
     if (verbose):
