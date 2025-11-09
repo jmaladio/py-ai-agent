@@ -7,6 +7,7 @@ from functions.get_files_info import schema_get_files_info
 from functions.get_file_content import schema_get_file_content
 from functions.run_python_file import schema_run_python_file
 from functions.write_file import schema_write_file
+from functions.call_function import call_function
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -56,8 +57,8 @@ def main(user_prompt, verbose = False):
         print(generate_content_response.text)
     else:
         for fn_call in generate_content_response.function_calls:
-            print(f"Calling function: {fn_call.name}({fn_call.args})")
-
+            function_call_result = call_function(fn_call, verbose)
+            print(f"-> {function_call_result.parts[0].function_response.response}")
     if (verbose):
         print(f"User prompt: {sys.argv[1]}")
         print(f"Prompt tokens: {generate_content_response.usage_metadata.prompt_token_count}")
